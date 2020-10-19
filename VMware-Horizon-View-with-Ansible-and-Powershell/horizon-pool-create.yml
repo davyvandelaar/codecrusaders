@@ -1,0 +1,29 @@
+---
+# file: playbook-horizon-view-environment.yml
+- name: Provision horizon desktoppools
+  max_fail_percentage: 0
+  hosts: all
+  connection: local
+  gather_facts: false
+
+  vars_files: "vars/pools.yml"
+
+  pre_tasks:
+  - name: create empty list environment_list
+    set_fact:
+      environment_list: []
+
+  - name: set scope to all environment
+    set_fact:
+      environment_list: "{{ environment_list | default([]) + \
+      [ { 'name': 'env_' + item.key, \
+      'vdi': 'vdi' + item.key + '{n:fixed=2}', \
+      'poolsize': item.value.vdi_pool_custom_size } ] }}"
+    with_dict: "{{ environment }}"
+    when: item.value.active
+
+  - debug:
+      var: environment_list
+    
+  roles:
+    - role_horizon_view_create

@@ -1,0 +1,17 @@
+environments:
+  'poolAA':
+    ipnumber: 
+      - 10.55.55.55
+    vdi_pool_custom_size: 2
+    active: true
+  'poolAB':
+    ipnumber: 
+      - 10.55.55.55
+    vdi_pool_custom_size: 3
+    active: true
+  'poolAC':
+    ipnumber: 
+      - 10.55.55.55
+    vdi_pool_custom_size: 4
+    active: true
+  

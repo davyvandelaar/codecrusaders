@@ -1,0 +1,33 @@
+---
+- name: create desktop pool
+  create_hv_desktoppool:
+    hv_server: "{{ your_connection_server }}"
+    hv_password: "{{ your_admin_password }}"
+    hv_username: "{{ your_admin_user }}"
+    hv_domain: "{{ your_horizon_domain }}"
+    hv_pool_list: "{{ environment_list }}"
+  when: environment_list|list
+  register: results
+  delegate_to: "{{ win_powershell_jumphost }}"
+  vars:
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+    ansible_user: "{{ credssp_ansible_user }}"
+    ansible_password: "{{ credssp_ansible_password }}"
+
+- name: debug results for logging
+  debug:
+    var: results
+
+  vars:
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+    ansible_user: "{{ your_credssp_user }}"
+    ansible_password: "{{ your_credssp_password }}"
+
+- name: show message if nothing to do
+  debug:
+    msg: 'lege lijst van environment'
+  when: not environment_list|list
