@@ -6,6 +6,8 @@
     hv_username: "{{ your_admin_user }}"
     hv_domain: "{{ your_horizon_domain }}"
     hv_pool_list: "{{ environment_list }}"
+    hv_template_poolname: "{{ your_horizon_template_poolname }}"
+    hv_add_entitlement: "{{ environment_list }}"
   when: environment_list|list
   register: results
   delegate_to: "{{ win_powershell_jumphost }}"
@@ -19,13 +21,6 @@
 - name: debug results for logging
   debug:
     var: results
-
-  vars:
-    ansible_connection: winrm
-    ansible_winrm_transport: credssp
-    ansible_winrm_server_cert_validation: ignore
-    ansible_user: "{{ your_credssp_user }}"
-    ansible_password: "{{ your_credssp_password }}"
 
 - name: show message if nothing to do
   debug:

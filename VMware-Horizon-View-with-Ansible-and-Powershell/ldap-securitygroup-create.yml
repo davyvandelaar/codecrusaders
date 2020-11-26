@@ -1,0 +1,30 @@
+---
+# file: wg-ldap-secgroup-create
+- name: create securiry group in Active Directory through LDAP
+  max_fail_percentage: 0
+  hosts: all
+  connection: local
+  gather_facts: false
+
+  vars_files:
+    - "vars/pools.yml"
+
+  # Load specifics for environment
+    - name: create empty list environment_list
+      set_fact:
+        environment_list: []
+
+    - name: set scope to all environment
+      set_fact:
+        environment_list: "{{ environment_list | default([]) }} + \
+        [ '{{ item.key }}' ]"
+      with_dict: "{{ environment }}"
+      when: item.value.active
+
+    - debug:
+        var: environment_list
+
+  roles:
+    - role: role_ldap_securitygroup_create
+      vars:
+        grouptype: 0x80000004  # Local / 0x80000002 for global

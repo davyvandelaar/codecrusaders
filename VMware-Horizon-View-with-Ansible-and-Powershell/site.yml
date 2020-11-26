@@ -1,0 +1,3 @@
+---
+- import-playbook: ldap-securitygroup-create.yml
+- import-playbook: ldap-horizon-pool-create.yml

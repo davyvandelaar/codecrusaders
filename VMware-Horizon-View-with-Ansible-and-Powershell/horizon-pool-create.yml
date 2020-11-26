@@ -18,7 +18,8 @@
       environment_list: "{{ environment_list | default([]) + \
       [ { 'name': 'env_' + item.key, \
       'vdi': 'vdi' + item.key + '{n:fixed=2}', \
-      'poolsize': item.value.vdi_pool_custom_size } ] }}"
+      'poolsize': item.value.vdi_pool_custom_size , \
+      'entitlement': 'sg_' + item.key } ] }}"
     with_dict: "{{ environment }}"
     when: item.value.active
 

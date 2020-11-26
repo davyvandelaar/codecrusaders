@@ -1,0 +1,22 @@
+---
+# defaults file for role_bdp_services_ldap_secgroup_create
+
+# do not change
+ansible_python_interpreter: /home/autouser/virtual-env/bin/python
+
+# ansible connections
+ansible_ssh_user:
+ansible_ssh_pass:
+
+# ldap connections
+ldap_server_uri:
+ldap_bind:
+ansible_ldap_service_password:
+ldap_ag_tree:
+ldap_ag_tree_target:
+
+# list of security group names or partial names to delete
+# WARNING : potential destructive
+# search filter in script is based on: 'contains'
+# in case of a partial name, be sure it is unique enough!
+werkgebieden_list:

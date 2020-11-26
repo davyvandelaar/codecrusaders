@@ -1,0 +1,13 @@
+---
+- name: add security group object entries to AD
+  ldap_entry:
+    server_uri: "{{ your_ldap_server_uri }}"
+    bind_dn: "{{ your_ldap_bind }}"
+    bind_pw: "{{ your_ldap_service_password }}"
+    dn: "CN=sg_{{ item }},{{ your_ldap_dn_tree }}" # together must be full dN for item
+    attributes:
+      groupType: "{{ grouptype }}"
+      sAMAccountName: "sg_{{ item }}"
+    objectClass:
+      - group
+    state: present
